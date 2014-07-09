@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: 3c6cdafa4177e294ba38ab561190408e
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: scoreBg
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 2664
+        width: 1438
+        height: 293
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: timerTime
+      rect:
+        serializedVersion: 2
+        x: 1674
+        y: 472
+        width: 123
+        height: 2555
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: timerBg
+      rect:
+        serializedVersion: 2
+        x: 2212
+        y: 429
+        width: 123
+        height: 2555
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: gameBg
+      rect:
+        serializedVersion: 2
+        x: 2448
+        y: 73
+        width: 2924
+        height: 2924
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: muteBtn
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 515
+        width: 463
+        height: 293
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: orderBg
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 125
+        width: 868
+        height: 683
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: pauseBtn
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 125
+        width: 469
+        height: 294
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: multiplierBg
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 125
+        width: 468
+        height: 294
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: timerIcon
+      rect:
+        serializedVersion: 2
+        x: 2159
+        y: 163
+        width: 229
+        height: 229
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: muteOff
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 915
+        width: 463
+        height: 293
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 
