@@ -55,6 +55,9 @@ public class Leaderboard_Screen : Rolling_Screen {
 			break;
 		case 2: 
 			selectFriendsTopTen();
+			if(!FB.IsLoggedIn){
+				return;
+			}
 			break;
 		}
 		createHighscores ();

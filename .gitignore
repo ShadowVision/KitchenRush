@@ -1,0 +1,11 @@
+# Unity .gitignore file.
+KitchenRushGame/Library
+KitchenRushGame/Library/*
+KitchenRushGame/Temp
+KitchenRushGame/Build
+*.DS_Store
+*.csproj
+*.sln
+*.userprefs
+*.pidb
+*.psd

@@ -22,29 +22,34 @@ public class FacebookController : MonoBehaviour {
 	private int lastScore = 0;
 	private int numberOfHighscores = 0;
 	private HighscoreDelegate savedHighscoreFunction;
-
+	private string highscoreName = "";
+	private int highestScore = 0;
+	
 	// Use this for initialization
 	void Start () {
 	}
 	public void Awake(){
+		parseLoaded = false;
+		gameStarted = false;
+		facebookLoaded = false;
 		instance = (FacebookController)this;
 		defaultPic = profilePic.sprite.texture;
 	}
 	public void init(){
-		parseLoaded = false;
-		gameStarted = false;
-		facebookLoaded = false;
-		initParse();
-		initFacebook ();
-		Invoke("loadMenu",1);
+		if(!facebookLoaded){
+			initFacebook ();
+		}else{
+			onInitComplete();
+		}
+		if(!parseLoaded){
+			initParse();
+		}
+
+
 	}
 	private void initFacebook(){
 		//init facebook plugin
 		FB.Init (onInitComplete, onHideUnity);
-
-		if (FB.IsLoggedIn) {
-			facebookUserLoggedIn();
-		}
 	}
 	private void initParse(){
 		//Load in app data from database
@@ -93,6 +98,10 @@ public class FacebookController : MonoBehaviour {
 
 	private void onInitComplete(){
 		facebookLoaded = true;
+		if (FB.IsLoggedIn) {
+			facebookUserLoggedIn();
+		}
+		loadMenu ();
 	}
 	private void onHideUnity(bool isGameShown){
 		
@@ -167,7 +176,9 @@ public class FacebookController : MonoBehaviour {
 			return;                                                                                                                
 		} 
 		Sprite newSprite = Sprite.Create(result.Texture,new Rect(0,0,150,150),Vector2.zero);
-		profilePic.sprite = newSprite;
+		if(profilePic!= null){
+			profilePic.sprite = newSprite;
+		}
 	}
 	private void successfulLogin(){
 		//if(authorizedToGainRewards){
@@ -181,11 +192,9 @@ public class FacebookController : MonoBehaviour {
 
 	}
 	public void saveScore(int amount){
-		if(user!= null){
-			Debug.Log ("trying to save score");
-			lastScore = amount;
-			FB.API("me?fields=name,id",Facebook.HttpMethod.GET,nameLoaded);
-		}
+		Debug.Log ("trying to save score: " + amount);
+		lastScore = amount;
+		FB.API("me?fields=name,id",Facebook.HttpMethod.GET,nameLoaded);
 	}
 	private string protectName(string fullName){
 		string[] fullNameSplit = fullName.Split (' ');
@@ -201,26 +210,44 @@ public class FacebookController : MonoBehaviour {
 	}
 	private void nameLoaded(FBResult result){
 		Dictionary<string,object> r = Json.Deserialize (result.Text) as Dictionary<string,object>;
+
+		//having each score stored in a highscore object
 		/*ParseObject obj = new ParseObject("Highscore");
 		obj["score"] = lastScore;
 		obj["name"] = protectName(r["name"] as String);
 		obj ["nameId"] = r["id"];
 		obj.SaveAsync ();*/
 
-		int highestScore = 0;
-		int oldHighestScore = 0;
-		user.TryGetValue("score", out oldHighestScore);
-
-		if(lastScore > oldHighestScore){
-			highestScore = lastScore;
-		}else{
-			highestScore = oldHighestScore;
-		}
-
-		user["name"] = protectName(r["name"] as String);
+		//having highscore stored in User
+		/*
+		user["name"] = highscoreName;
 		user["score"] = highestScore;
 		user.SaveAsync ();
-		Debug.Log("saving score: " + highestScore);
+		Debug.Log("saving score: " + highestScore);*/
+
+		//having only one highscore object stored
+		ParseQuery<ParseObject> query = ParseObject.GetQuery("Highscore")
+			.WhereMatches("nameId", (r["id"] as String),null);
+		query.FirstAsync().ContinueWith(t => {
+			ParseObject highscore = t.Result;
+
+			highestScore = 0;
+			int oldHighestScore = 0;
+			highscore.TryGetValue("score", out oldHighestScore);
+			
+			if(lastScore > oldHighestScore){
+				highestScore = lastScore;
+			}else{
+				highestScore = oldHighestScore;
+			}
+			
+			highscoreName = protectName(r["name"] as String);
+
+			highscore["score"] = highestScore;
+			highscore["name"] = protectName(r["name"] as String);
+			highscore ["nameId"] = r["id"];
+			highscore.SaveAsync ();
+		});
 	}
 	public void addOrbs(int amount){
 		if (user != null) {
@@ -303,7 +330,7 @@ public class FacebookController : MonoBehaviour {
 		this.numberOfHighscores = numberOfHighscores;
 		switch (highscoreType) {
 		case HighscoreType.TOPTEN:
-			query = ParseObject.GetQuery ("User")
+			query = ParseObject.GetQuery ("Highscore")
 				.Limit(numberOfHighscores)
 					.OrderByDescending("score");
 			
@@ -321,9 +348,9 @@ public class FacebookController : MonoBehaviour {
 			DateTime now = DateTime.Now;
 			DateTime time = new DateTime(now.Year,now.Month,1,12,0,0);
 
-			query = ParseObject.GetQuery ("User")
+			query = ParseObject.GetQuery ("Highscore")
 				.Limit(numberOfHighscores)
-					.WhereGreaterThan("createdAt", time)
+					.WhereGreaterThan("updatedAt", time)
 						.OrderByDescending("score");
 
 			
@@ -337,7 +364,7 @@ public class FacebookController : MonoBehaviour {
 			break;
 
 		default:
-			query = ParseObject.GetQuery ("User")
+			query = ParseObject.GetQuery ("Highscore")
 				.Limit(numberOfHighscores)
 					.OrderByDescending("score");
 			
@@ -363,7 +390,7 @@ public class FacebookController : MonoBehaviour {
 			i++;
 		}
 		//continue with the highscore query
-		ParseQuery<ParseObject> query = ParseObject.GetQuery ("User")
+		ParseQuery<ParseObject> query = ParseObject.GetQuery ("Highscore")
 			.Limit(numberOfHighscores)
 				.WhereContainedIn("nameId", friendIds)
 				.OrderByDescending("score");

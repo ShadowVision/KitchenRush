@@ -9,8 +9,10 @@ public class Btn_Share : Btn_Base {
 			FacebookController.instance.share ();
 		}else{
 			//STATS.showFacebookLogin = true;
-			GameLogic.instance.loadingScreen.showScreen();
-			Application.LoadLevel ("MainMenu");
+			/*GameLogic.instance.loadingScreen.showScreen();
+			Application.LoadLevel ("MainMenu");*/
+
+			FacebookController.instance.login();
 		}
 	}
 }

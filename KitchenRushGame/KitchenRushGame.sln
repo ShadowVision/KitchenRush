@@ -1,0 +1,45 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{283FFE9F-1995-5910-1F7F-F03F521DBFDA}") = "KitchenRushGame", "Assembly-CSharp.csproj", "{9055BB23-F770-9DBD-7A64-50EAC92BF005}"
+EndProject
+Project("{283FFE9F-1995-5910-1F7F-F03F521DBFDA}") = "KitchenRushGame", "Assembly-CSharp-Editor.csproj", "{6305B0D4-B5D6-2ED9-E2FB-B98A0D6F95EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9055BB23-F770-9DBD-7A64-50EAC92BF005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9055BB23-F770-9DBD-7A64-50EAC92BF005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9055BB23-F770-9DBD-7A64-50EAC92BF005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9055BB23-F770-9DBD-7A64-50EAC92BF005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6305B0D4-B5D6-2ED9-E2FB-B98A0D6F95EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6305B0D4-B5D6-2ED9-E2FB-B98A0D6F95EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6305B0D4-B5D6-2ED9-E2FB-B98A0D6F95EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6305B0D4-B5D6-2ED9-E2FB-B98A0D6F95EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+																																																										GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabWidth = 4
+		$3.EolMarker = Unix
+		$3.inheritsSet = Mono
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

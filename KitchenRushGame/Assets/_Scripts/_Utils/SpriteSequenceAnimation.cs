@@ -40,8 +40,10 @@ public class SpriteSequenceAnimation : MonoBehaviour {
 
 	public void playAnimation(){
 		pauseAnimation();
-		delayBetweenFramesInSeconds = 1/fps;
-		InvokeRepeating("tickAnimation", delayBetweenFramesInSeconds, delayBetweenFramesInSeconds);
+		if(animationSequence.Length > 0){
+			delayBetweenFramesInSeconds = 1/fps;
+			InvokeRepeating("tickAnimation", delayBetweenFramesInSeconds, delayBetweenFramesInSeconds);
+		}
 	}
 
 	public void stopAnimation(){
@@ -64,6 +66,15 @@ public class SpriteSequenceAnimation : MonoBehaviour {
 				frameIndex = 0;
 			}
 		}
-		sprite.sprite = animationSequence[frameIndex];
+		showFrame (frameIndex);
+	}
+	private void showFrame(int i){
+		sprite.sprite = animationSequence[i];
+	}
+	public void goToFrame(int i){
+		if(animationSequence != null){
+			i = Mathf.Max(0,Mathf.Min(i,animationSequence.Length));
+			showFrame (i);
+		}
 	}
 }

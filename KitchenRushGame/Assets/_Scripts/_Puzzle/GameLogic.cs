@@ -101,13 +101,13 @@ public class GameLogic : MonoBehaviour {
 				col.enabled = false;
 			}
 			//figure out how many stars they get
-			int orbs = 1;
+			int orbs = 0;
 			for (int i=0; i<orbThresholds.Length; i++) {
 				if (score.points >= orbThresholds [i]) {
 					orbs++;
 				}
 			}
-			if (orbs > 2) {
+			if (orbs > 1) {
 				AnimationController.instance.playAnimation (AnimationController.AnimationType.WIN);
 			} else {
 				AnimationController.instance.playAnimation (AnimationController.AnimationType.LOSE);

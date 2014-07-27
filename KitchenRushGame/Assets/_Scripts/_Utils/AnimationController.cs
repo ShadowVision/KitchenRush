@@ -30,8 +30,10 @@ public class AnimationController : MonoBehaviour {
 		playAnimation(AnimationType.IDLE);
 	}
 	private void animationEnd(){
+		Debug.Log ("animation ended");
 		currentAnimationType = AnimationType.NONE;
 		startIdle();
+		Board.instance.resetInteraction ();
 	}
 	void Awake(){
 		instance = (AnimationController)this;
@@ -40,7 +42,14 @@ public class AnimationController : MonoBehaviour {
 	void Update () {
 	
 	}
+	private void stopAllAnimations(){
+		foreach(SpriteSequenceAnimation a in animations){
+			a.stopAnimation();
+		}
+	}
 	private void playAnim(int i){
+		CancelInvoke ("playIdle");
+		stopAllAnimations ();
 		if(animations != null){
 			currentAnimation = animations[i];
 			if(currentAnimation != null){
@@ -61,30 +70,39 @@ public class AnimationController : MonoBehaviour {
 				break;
 			case AnimationType.GOOD1:
 			case AnimationType.GOOD2:
-			case AnimationType.GOOD3	:
-				playAnim (1);
+			case AnimationType.GOOD3:
+				playAnim (Random.Range(1,4));
 				break;
 			case AnimationType.COMBO1:
-				playAnim(2);
+			case AnimationType.COMBO2:
+			case AnimationType.COMBO3:
+				int r = Random.Range(4,6);
+				playAnim(r);
+				if(r == 5){
+					Invoke("finishPose",5f);
+				}
 				break;
 			case AnimationType.WIN:
-				CancelInvoke("playIdle");
-				playAnim(3);
+				playAnim(0);
 				break;
 			case AnimationType.LOSE:
-				CancelInvoke("playIdle");
-				playAnim(4);
+				playAnim(0);
 				break;
 			
 			}
 			currentAnimationType = anim;
 		}
 	}
+	private void finishPose(){
+		playAnim (6);
+	}
 	private void startIdle(){
+		animations [0].goToFrame (0);
 		currentAnimationType = AnimationType.IDLE;
 		Invoke("playIdle",timeBetweenIdleAnimationInSeconds);
 	}
 	private void playIdle(){
+		stopAllAnimations ();
 		if(currentAnimationType == AnimationType.IDLE){
 			playAnim(0);
 		}

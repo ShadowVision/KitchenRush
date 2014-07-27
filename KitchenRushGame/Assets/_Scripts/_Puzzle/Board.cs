@@ -45,15 +45,18 @@ public class Board : MonoBehaviour {
 	void Update () {
 	
 	}
-	public void pauseInteraction(float seconds){
+	public void stopInteraction(){
 		canInteract = false;
 		Collider2D[] col = gameObject.GetComponentsInChildren<Collider2D>();
 		foreach(Collider2D c in col){
 			c.enabled = false;
 		}
-		Invoke("resetInteraction", seconds);
 		pauseSprite.enabled = true;
 		GameLogic.instance.timer.pauseTimer();
+	}
+	public void pauseInteraction(float seconds){
+		stopInteraction ();
+		Invoke("resetInteraction", seconds);
 	}
 	public void resetInteraction(){
 		if(!GameLogic.instance.isPaused){
@@ -67,6 +70,7 @@ public class Board : MonoBehaviour {
 		}
 	}
 	public void buildBoard(){
+		Debug.Log ("Building Board");
 		Combo.resetCombo ();
 		tiles = new Tile[tilesWide,tilesTall];
 		Vector3 newPosition = new Vector3(0,0,0);
@@ -198,13 +202,17 @@ public class Board : MonoBehaviour {
 			//search nearby tiles and compile a list of tiles to destroy
 			clearGroupAt(x,y);
 			//play respective animation
-			if(tileIndex > minNumberOfTiles*3){
+			/*if(tileIndex > minNumberOfTiles*3){
 				AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD3);
 			}else if(tileIndex > minNumberOfTiles*2){
 				AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD2);
 			}else if(tileIndex > minNumberOfTiles){
 				AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD1);
-			}
+			}*/
+
+
+			AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD1);
+
 			//pauseInteraction(2);
 
 			//destroy tiles in list
