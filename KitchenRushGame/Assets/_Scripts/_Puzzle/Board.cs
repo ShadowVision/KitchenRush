@@ -210,9 +210,9 @@ public class Board : MonoBehaviour {
 				AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD1);
 			}*/
 
-
-			AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD1);
-
+			if(tileIndex >= minNumberOfTiles){
+				AnimationController.instance.playAnimation(AnimationController.AnimationType.GOOD1);
+			}
 			//pauseInteraction(2);
 
 			//destroy tiles in list

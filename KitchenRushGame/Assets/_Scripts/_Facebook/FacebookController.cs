@@ -97,6 +97,7 @@ public class FacebookController : MonoBehaviour {
 	}
 
 	private void onInitComplete(){
+		Debug.Log ("finished initalizing facebook");
 		facebookLoaded = true;
 		if (FB.IsLoggedIn) {
 			facebookUserLoggedIn();
@@ -138,7 +139,7 @@ public class FacebookController : MonoBehaviour {
 		StartCoroutine("loginParseUser");
 		loadUser ();
 	}
-		private void loadUser(){
+	private void loadUser(){
 		//debugText.text = "User: " + FB.UserId;
 		requestUserPic();
 		successfulLogin();
@@ -155,6 +156,11 @@ public class FacebookController : MonoBehaviour {
 		try{
 			user.Add("orbs",15);
 			user.Add ("rewards", new bool[6]{false,false,false,false,false,false});
+			//user.Add ("name", loginTask.Result.Username);
+
+			//Create their highscore entry
+			FB.API("me?fields=name,id",Facebook.HttpMethod.GET,nameLoaded);
+	
 			user.SaveAsync();
 			Debug.Log("setup orbs");
 		}catch(ParseException e){
@@ -194,7 +200,7 @@ public class FacebookController : MonoBehaviour {
 	public void saveScore(int amount){
 		Debug.Log ("trying to save score: " + amount);
 		lastScore = amount;
-		FB.API("me?fields=name,id",Facebook.HttpMethod.GET,nameLoaded);
+		finishSavingHighscore ();
 	}
 	private string protectName(string fullName){
 		string[] fullNameSplit = fullName.Split (' ');
@@ -210,7 +216,16 @@ public class FacebookController : MonoBehaviour {
 	}
 	private void nameLoaded(FBResult result){
 		Dictionary<string,object> r = Json.Deserialize (result.Text) as Dictionary<string,object>;
-
+		saveFirstHighscore (protectName (r ["name"] as String));
+	}
+	private void saveFirstHighscore(string username){
+		ParseObject highscore = new ParseObject("Highscore"); 
+		highscore["score"] = 0;
+		highscore["name"] = username;
+		highscore["nameId"] = FB.UserId;
+		highscore.SaveAsync();
+	}
+	private void finishSavingHighscore(){
 		//having each score stored in a highscore object
 		/*ParseObject obj = new ParseObject("Highscore");
 		obj["score"] = lastScore;
@@ -227,7 +242,7 @@ public class FacebookController : MonoBehaviour {
 
 		//having only one highscore object stored
 		ParseQuery<ParseObject> query = ParseObject.GetQuery("Highscore")
-			.WhereMatches("nameId", (r["id"] as String),null);
+			.WhereMatches("nameId", FB.UserId,null);
 		query.FirstAsync().ContinueWith(t => {
 			ParseObject highscore = t.Result;
 
@@ -240,12 +255,8 @@ public class FacebookController : MonoBehaviour {
 			}else{
 				highestScore = oldHighestScore;
 			}
-			
-			highscoreName = protectName(r["name"] as String);
 
 			highscore["score"] = highestScore;
-			highscore["name"] = protectName(r["name"] as String);
-			highscore ["nameId"] = r["id"];
 			highscore.SaveAsync ();
 		});
 	}
@@ -310,10 +321,11 @@ public class FacebookController : MonoBehaviour {
 		appData.TryGetValue ("redeemCode", out code);
 		return code;
 	}
-	public void share(){
-		FB.Feed ("", "https://apps.facebook.com/departurekitchenrush", "Come Play Kitchen Rush", "Earn Free Food At Departure!",
-		        "Username just scored 200 points! Try to beat their highscore and earn free food at Portlands Departure Restaurant.",
-		        "http://photos-f.ak.instagram.com/hphotos-ak-prn/10011307_684035901661909_1804233758_n.jpg", "", "", "", "", null,
+
+	public void share(int score){
+		FB.Feed ("", "https://apps.facebook.com/departurekitchenrush", "Let's Play Kitchen Rush!", "Play video games for free food",
+		         "I just scored " + score + " points! Redeem points for food at Departure Restaurant + Lounge!",
+		         "http://libonatidesign.com/Storage/Departure/SushiCrush/KitchenRush_FacebookShareIcon.jpg", "", "", "", "", null,
 		        shareCallback);
 	}
 	void shareCallback(FBResult response) {

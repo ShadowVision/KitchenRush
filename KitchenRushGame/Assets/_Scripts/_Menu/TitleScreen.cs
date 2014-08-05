@@ -5,7 +5,7 @@ public class TitleScreen : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Invoke("moveOn",7f);
+		Invoke("moveOn",6.5f);
 	}
 	private void Update(){
 		if(Input.GetMouseButtonDown(0)){

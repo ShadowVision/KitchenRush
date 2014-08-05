@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Tutorial : MonoBehaviour {
+	public static bool isTutorial = false;
 	public Menu_Screen[] screens;
 
 	private int i;
@@ -10,6 +11,7 @@ public class Tutorial : MonoBehaviour {
 		hideAllScreens ();
 		i = 0;
 		screens [i].showScreen ();
+		Tutorial.isTutorial = true;
 	}
 	
 	// Update is called once per frame

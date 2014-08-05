@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GameOverScreen : MonoBehaviour {
+	public Btn_Share shareBtn;
 	public TextMesh scoreTxt;
 	public GameObject[] orbSprites;
 	private int index =0;
@@ -25,6 +26,7 @@ public class GameOverScreen : MonoBehaviour {
 		}
 		this.orbs = orbs;
 		anim = gameObject.GetComponent<Animator> ();
+		shareBtn.score = amount;
 		animateOrbs();
 	}
 	private void animateOrbs(){

@@ -43,8 +43,12 @@ public class AnimationController : MonoBehaviour {
 	
 	}
 	private void stopAllAnimations(){
-		foreach(SpriteSequenceAnimation a in animations){
-			a.stopAnimation();
+		if(animations != null){
+			foreach(SpriteSequenceAnimation a in animations){
+				if(a!=null){
+					a.stopAnimation();
+				}
+			}
 		}
 	}
 	private void playAnim(int i){

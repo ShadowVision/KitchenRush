@@ -49,6 +49,7 @@ public class GameLogic : MonoBehaviour {
 	}
 	public void startGame(){
 		if(!gameStarted){
+			Tutorial.isTutorial = false;
 			gameStarted = true;
 			timer.startTimer(lengthOfTimerInSeconds,onTimerCompletion);
 			music.Play ();
@@ -62,7 +63,11 @@ public class GameLogic : MonoBehaviour {
 	
 	}
 	public void completeObjective(Objective obj){
-		newObjective();
+		if(!Tutorial.isTutorial){
+			newObjective();
+		}else{
+
+		}
 	}
 	public void newObjective(){
 		Tile.TileType lastType = Tile.TileType.NONE;

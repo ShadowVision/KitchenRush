@@ -57,7 +57,10 @@ public class Objective : MonoBehaviour {
 
 		//kill self after playing die animation
 		AnimationController.instance.playAnimation(AnimationController.AnimationType.COMBO1);
-		Board.instance.pauseInteraction(1.5f);
+
+		if(!Tutorial.isTutorial){
+			Board.instance.stopInteraction();
+		}
 		Invoke("die",1.5f);
 	}
 	private void die(){

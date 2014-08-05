@@ -34,7 +34,7 @@ public class MenuScreenController : MonoBehaviour {
 				showMenu();
 			}
 		}else{
-			FacebookController.instance.init ();
+
 		}
 		STATS.showRewards = false;
 		loaded = true;

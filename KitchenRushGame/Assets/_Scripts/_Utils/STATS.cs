@@ -35,13 +35,5 @@ public class STATS : MonoBehaviour {
 		}
 	}
 	static public bool appDataLoaded = false;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	static public string currentUserName = "Anonymous";
 }
